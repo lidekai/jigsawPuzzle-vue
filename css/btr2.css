@@ -1,0 +1,78 @@
+/**
+*选择设备区
+ */
+.parts{
+    text-align: center;
+    background-color: #f0c78a;
+}
+.partsImgs{
+    border:1px solid #000000;
+
+}
+.partsImg{
+    width: 100%;
+    height: 100%;
+}
+.partsImgs:hover{
+    cursor: pointer;
+    background-color: #67C23A;
+}
+.partsName{
+    text-align: center;
+}
+.active{
+    background-color: red;
+}
+/**
+*组合区
+ */
+.comboImg,.partsComboMove,.atuoShowImgs{
+    position: absolute;
+}
+.partsComboImg,.partsMove,.atuoShowImg{
+    width: 100%;
+    height: 100%;
+}
+.combo{
+    text-align: center;
+}
+.comboImg{
+    position: absolute;
+}
+.partsCombo{
+    position:absolute;
+}
+/**
+*移动的设备
+ */
+.comboMove{
+    position: absolute;
+    pointer-events:none;
+    opacity:0.5;
+}
+.partsComboMove{
+    display: none;
+
+}
+.partsMove{
+    width: 100%;
+    height: 100%;
+}
+/**
+*标志
+ */
+.signs{
+    position: absolute;
+}
+.signXY{
+    width: 100%;
+    height: 100%;
+
+}
+.signXY:hover{
+    cursor: pointer;
+    background-color: #5daf34;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity:0.5;
+}
