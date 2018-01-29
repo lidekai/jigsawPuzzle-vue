@@ -28,11 +28,11 @@ const btr2Data = {
         signWhat:[
             {signX:"9%",signY:"40%",signId:"sign-1",showTrue:"block"},
             {signX:"4%",signY:"18.5%",signId:"sign-2",showTrue:"block"},
-            {signX:"17%",signY:"20%",signId:"sign-3",showTrue:"block"},
+            {signX:"16%",signY:"30%",signId:"sign-3",showTrue:"block"},
             {signX:"28.5%",signY:"26.8%",signId:"sign-4",showTrue:"block"},
             {signX:"47%",signY:"30%",signId:"sign-5",showTrue:"block"},
             {signX:"47%",signY:"19%",signId:"sign-6",showTrue:"block"},
-            {signX:"40%",signY:"2%",signId:"sign-7",showTrue:"block"},
+            {signX:"38%",signY:"5%",signId:"sign-7",showTrue:"block"},
             {signX:"17%",signY:"8%",signId:"sign-8",showTrue:"block"},
             {signX:"14%",signY:"55.5%",signId:"sign-9",showTrue:"block"}
         ],
@@ -54,18 +54,44 @@ new Vue({
         partsComboImg:"images/btr2-parts-combo-1.png",
         partsComboX:"0px",
         partsComboY:"0px",
-        getx:370,
-        gety:110,
         deductionPoints:"",//扣分的积累
         show: false,
         showSum:0,
-        showOne:true
+        showOne:true,
+        getPartsWidth:0,
+        getMoveWidth:0,
+        getMoveHeight:0,
+        getComboTitleHeight:0,
+        getComboTitleTop:0
+
     },
     filters:{
 
     },
     mounted:function(){
+        const that = this;
         this.$nextTick(function () {
+            let partsWidth = document.getElementsByClassName('getPartsWidth')[0];
+            that.getPartsWidth=partsWidth.offsetWidth*2;
+
+            let comboTitle = document.getElementsByClassName('comboTitle')[0];
+            that.getComboTitleHeight=comboTitle.offsetHeight;
+            that.getComboTitleTop=comboTitle.offsetTop;
+
+
+            // 然后监听window的resize事件．在浏览器窗口变化时再设置下背景图高度．
+            window.onresize = function temp() {
+                let partsWidth = document.getElementsByClassName('getPartsWidth')[0];
+                that.getPartsWidth=partsWidth.offsetWidth*2;
+
+                let moveP = document.getElementsByClassName('getMoveWidth')[0];
+                that.getMoveWidth=Math.floor(moveP.offsetWidth/2);
+                that.getMoveHeight=Math.floor(moveP.offsetHeight*3/4);
+
+                let comboTitle = document.getElementsByClassName('comboTitle')[0];
+                that.getComboTitleHeight=comboTitle.offsetHeight;
+                that.getComboTitleTop=comboTitle.offsetTop;
+            };
         })
     },
     methods:{
@@ -77,64 +103,24 @@ new Vue({
             item.isActive =!item.isActive ;
             this.partsComboSpan="el-col-"+item.partsComboSpan;
             this.partsComboImg="images/btr2-parts-combo-"+item.partsId.split("-")[1]+".png";
-            //移动图片的在鼠标移动中的定位
-            let span=this.partsComboImg.split("-")[3];
-            switch(span){
-                case "1.png" :
-                    this.getx=370;
-                    this.gety=110;
-                    break;
-                case "2.png" :
-                    this.getx=340;
-                    this.gety=100;
-                    break;
-                case "3.png" :
-                    this.getx=370;
-                    this.gety=160;
-                    break;
-                case "4.png" :
-                    this.getx=340;
-                    this.gety=100;
-                    break;
-                case "5.png" :
-                    this.getx=430;
-                    this.gety=150;
-                    break;
-                case "6.png" :
-                    this.getx=450;
-                    this.gety=110;
-                    break;
-                case "7.png" :
-                    this.getx=340;
-                    this.gety=120;
-                    break;
-                case "8.png" :
-                    this.getx=380;
-                    this.gety=100;
-                    break;
-                case "9.png" :
-                    this.getx=340;
-                    this.gety=100;
-                    break;
-                case "10.png" :
-                    this.getx=450;
-                    this.gety=110;
-                    break;
-            }
         },
         updateXY:function(event){//图片跟鼠标移动
-            this.partsComboX=event.clientX-this.getx+"px";
-            this.partsComboY=event.clientY-this.gety+"px";
+            this.partsComboX=event.clientX-this.getPartsWidth-this.getMoveWidth+"px";
+            this.partsComboY=event.clientY-this.getComboTitleHeight-this.getComboTitleTop-this.getMoveHeight+"px";
         },
         toggleShow: function() {//鼠标移入移出组合区显示图片
+
             this.isShow= !this.isShow;
             if(this.partsComboImg==''){
                 this.isShow=true;
             }
-
+            if(this.isShow==false){
+                let moveP = document.getElementsByClassName('getMoveWidth')[0];
+                this.getMoveWidth=Math.floor(moveP.offsetWidth/2);
+                this.getMoveHeight=Math.floor(moveP.offsetHeight*3/4);
+            }
         },
         signSelected(item) {
-
             let imgIndex=item.signId.split("-")[1];
             if(this.partsComboImg.length!=0){
                 let span=this.partsComboImg.split("-")[3].split(".")[0];

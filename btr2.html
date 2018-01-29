@@ -10,25 +10,26 @@
                     <div id="btr2">
                         <el-row v-if="showOne">
                             <!--==============================================选择设备区==============================================-->
-                            <el-col :span="6" class="parts">
+                            <el-col :span="6" class="parts" >
                                 <h2>选择设备区</h2>
                                 <el-row>
-                                <el-col :span="12" class="partsImgs" v-for="item in partsImgUrls" :key="item.partsId" :style="{display:item.showTrue}">
-                                    <div @click="partsSelected(item)" :class="{active:item.isActive}">
-                                        <span class="partsName">{{item.partsName}}</span>
-                                        <img :src="item.partsImgUrl" class="partsImg" >
-                                    </div>
-                                </el-col>
-                        </el-row>
-            </el-col>
+                                    <el-col :span="12" class="partsImgs" v-for="item in partsImgUrls" :key="item.partsId" :style="{display:item.showTrue}">
+                                        <div  class="getPartsWidth">
+                                            <div @click="partsSelected(item)" :class="{active:item.isActive}">
+                                                <span class="partsName">{{item.partsName}}</span>
+                                                <img :src="item.partsImgUrl" class="partsImg" >
+                                            </div>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </el-col>
         <!--==============================================选择组合区==============================================-->
-            <el-col :span="18" class="combo">
-                <h2 class="combo">组合区</h2>
-
+            <el-col :span="18">
+                <h2 class="combo comboTitle">组合区</h2>
                     <el-row>
-                        <div  @mouseover="toggleShow()" @mouseout="toggleShow()" @mousemove="updateXY">
+                        <div  @mouseover="toggleShow()" @mouseout="toggleShow()" @mousemove="updateXY" class="comboSum">
                             <el-col :span="24" v-for="item in comboImgUrls" :key="item.comboId" class="comboImg" :style="{display:item.showTrue }">
-                                <img :src="item.comboImgUrl" class="partsComboImg">
+                               <img :src="item.comboImgUrl" class="partsComboImg">
                             </el-col>
                             <el-col :span="24" v-for="item in autoShows" :key="item.autoShowId" class="atuoShowImgs" v-if="show">
                                 <img :src="item.autoImg" class="atuoShowImg">
@@ -36,8 +37,10 @@
                            <el-col :span="1" v-for="item in signXY" :key="item.signId" class="signs" :style="{left:item.signX,'margin-top':item.signY,display:item.showTrue}">
                                  <img class="signXY"  src="images/what.png" @click="signSelected(item)">
                            </el-col>
-                            <div :class="[partsComboSpan,{partsComboMove:isShow}]" class="el-col comboMove" :style="{left:partsComboX,'margin-top':partsComboY}" >
-                                <img :src="partsComboImg"  class="partsMove">
+                            <div :class="[partsComboSpan,{partsComboMove:isShow}]" class="el-col comboMove" :style="{left:partsComboX,'margin-top':partsComboY}">
+                                <div class="getMoveWidth">
+                                    <img :src="partsComboImg"  class="partsMove">
+                                </div>
                             </div>
                         </div>
                     </el-row>
